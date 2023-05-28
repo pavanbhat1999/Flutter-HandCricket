@@ -58,17 +58,17 @@ class _RandomNumberAppState extends State<MyApp> {
             'Hand Cricket with computer',
           ),
         ),
-        body: Center(
-            child: Column(children: [
+        body: Column(children: [
           if (isGameOver)
             Text(
               'Game Over\nFinal Score: $player1Score',
               style: TextStyle(fontSize: 24.0),
               textAlign: TextAlign.center,
             ),
-          Text(
-            '\n\n\nPlayer 1 : $player1Score \n\nUser Input : $userinput \nComputer Number : $randomNumber \nTotal Score = $sum \nstatus = $outMessage\n\n\n\n',
-          ),
+          if (!isGameOver)
+            Text(
+              '\n\n\nPlayer 1 : $player1Score \n\nUser HIT  : $userinput \nComputer Guess💻 : $randomNumber \nTotal Score = $sum \nstatus = $outMessage\n\n\n\n',
+            ),
           ElevatedButton(
               onPressed: () => generateRandomNumber(0),
               child: const Text('Reset')),
@@ -87,7 +87,7 @@ class _RandomNumberAppState extends State<MyApp> {
           ElevatedButton(
               onPressed: () => generateRandomNumber(6),
               child: const Text('6 Run')),
-        ])),
+        ]),
       ),
     );
   }
