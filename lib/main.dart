@@ -17,6 +17,7 @@ class _RandomNumberAppState extends State<MyApp> {
   int userinput = 0;
   int player1Score = 0;
   bool isGameOver = false;
+  List<int> finalScores = [];
   void reset() {
     // randomNumber = 0;
     sum = 0;
@@ -33,9 +34,16 @@ class _RandomNumberAppState extends State<MyApp> {
         reset();
       }
       randomNumber = Random().nextInt(7);
+      if (randomNumber == 0) {
+        randomNumber = randomNumber + 1;
+      }
+      if (randomNumber == 5) {
+        randomNumber = randomNumber - 1;
+      }
       if (userinput == randomNumber) {
         outMessage = 'Out';
         player1Score = sum;
+        finalScores.add(player1Score);
         sum = 0;
         isGameOver = true;
         //reset();
@@ -58,36 +66,68 @@ class _RandomNumberAppState extends State<MyApp> {
             'Hand Cricket with computer',
           ),
         ),
-        body: Column(children: [
-          if (isGameOver)
-            Text(
-              'Game Over\nFinal Score: $player1Score',
-              style: TextStyle(fontSize: 24.0),
-              textAlign: TextAlign.center,
+        body: Center(
+          child: Column(children: [
+            if (isGameOver)
+              Text(
+                'Game Over\nFinal Score: $player1Score ',
+                style: TextStyle(fontSize: 24.0),
+                textAlign: TextAlign.center,
+              ),
+            if (!isGameOver) Text('Score : $player1Score '),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('👨‍🦱 : $userinput'),
+                Text(' || 💻 : $randomNumber')
+              ],
             ),
-          if (!isGameOver)
-            Text(
-              '\n\n\nPlayer 1 : $player1Score \n\nUser HIT  : $userinput \nComputer Guess💻 : $randomNumber \nTotal Score = $sum \nstatus = $outMessage\n\n\n\n',
+            // Text(
+            //   '\n\n\nPlayer 1 : $player1Score \n\nUser HIT 👨‍🦱 : $userinput \nComputer Guess💻 : $randomNumber \nTotal Score = $sum \nstatus = $outMessage\n\n\n\n',
+            // ),
+            ElevatedButton(
+                onPressed: () => generateRandomNumber(0),
+                child: const Text('Reset')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                      onPressed: () => generateRandomNumber(1),
+                      child: const Text('1 Run')),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                      onPressed: () => generateRandomNumber(2),
+                      child: const Text('2 Run')),
+                )
+              ],
             ),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(0),
-              child: const Text('Reset')),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(1),
-              child: const Text('1 Run')),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(2),
-              child: const Text('2 Run')),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(3),
-              child: const Text('3 Run')),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(4),
-              child: const Text('4 Run')),
-          ElevatedButton(
-              onPressed: () => generateRandomNumber(6),
-              child: const Text('6 Run')),
-        ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                      onPressed: () => generateRandomNumber(3),
+                      child: const Text('3 Run')),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                      onPressed: () => generateRandomNumber(4),
+                      child: const Text('4 Run')),
+                )
+              ],
+            ),
+            ElevatedButton(
+                onPressed: () => generateRandomNumber(6),
+                child: const Text('6 Run')),
+            Text('Some Last Match Scores $finalScores'),
+          ]),
+        ),
       ),
     );
   }
